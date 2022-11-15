@@ -1,0 +1,53 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}{{ room.name }} | {% endblock %}
+
+{% block content %}
+<div class="p-10 lg:p-20 text-center">
+    <h1 class="text-3xl lg:text-6xl text-white">{{ room.name }}</h1>
+</div>
+
+<div class="lg:w-2/4 mx-4 lg:mx-auto p-4 bg-white rounded-xl">
+    <div class="chat-messages space-y-3" id="chat-messages">
+        {% for m in messages %}<b>{{ m.user.username }}</b>: {{ m.content }}<br>{% endfor %}
+    </div>
+</div>
+
+<div class="chatwindow" style = "border: 2px black">
+    <form method="post" action="." class="flex">
+        {% csrf_token %}
+        <input type="text" name="content" class="flex-1 mr-3" placeholder="Your message..." id="chat-message-input">
+
+        <button 
+            class="px-5 py-3 rounded-xl text-white bg-teal-600 hover:bg-teal-700"
+            id="chat-message-submit"
+        >Submit</button>
+    </form>
+</div>
+<div>
+    <h1>Player</h1>
+</div>
+<div>
+    <input id="url-field" type="text" placeholder="Enter youtube url"/>
+    <button id="add-track" title="Add track to playlist" onclick="addTrack()">Add Track</button>
+</div>
+<div>
+    <!--Youtube-->
+    <div id="player"></div>
+    <!--Player-->
+</div>
+<div id="playback-controls">
+    <button id="play-button">Play</button>
+    <button id="pause-button">Pause</button>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ room.slug|json_script:"json-roomname" }}
+{{ request.user.username|json_script:"json-username" }}
+
+
+<script src="{% static 'js/socket.js' %}"></script>
+<script src="{% static 'js/player.js' %}"></script>
+{% endblock %}
