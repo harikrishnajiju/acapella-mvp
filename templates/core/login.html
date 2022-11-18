@@ -2,36 +2,121 @@
 
 {% block title %}Log in | {% endblock %}
 
+{% block customstyle %}
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      align-items: center;
+
+    }
+    .form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: red;
+        opacity: 1; /* Firefox */
+}
+
+    .form-control:-ms-input-placeholder { /* Internet Explorer 10-11 */
+            color: red;
+    }
+
+    .form-control::-ms-input-placeholder { /* Microsoft Edge */
+            color: red;
+    }
+
+    .form-signin {
+      max-width: 330px;
+      padding: 15px;
+    }
+
+    .form-signin .form-floating:focus-within {
+      z-index: 2;
+    }
+
+    .form-signin input[type="text"] {
+      margin-bottom: -1px;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    .form-signin input[type="password"] {
+      margin-bottom: 10px;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+
+    .bi {
+      vertical-align: -.125em;
+      fill: currentColor;
+    }
+
+    .nav-scroller {
+      position: relative;
+      z-index: 2;
+      height: 2.75rem;
+      overflow-y: hidden;
+    }
+
+    .nav-scroller .nav {
+      display: flex;
+      flex-wrap: nowrap;
+      padding-bottom: 1rem;
+      margin-top: -1px;
+      overflow-x: auto;
+      text-align: center;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+    }
+{% endblock customstyle %}
+
 {% block content %}
-<div class="p-10 lg:p-20 text-center">
-    <h1 class="text-3xl lg:text-6xl text-white">Log in</h1>
+<div class="d-flex flex-column">
+    {% comment %} <div class="p-2">
+        <h1 class="">Log in</h1>
+    </div> {% endcomment %}
+    <div class="p-2">
+        <form method="post" action="." class="form-signin w-100 h-100 m-auto">
+            {% csrf_token %}
+        
+            {% comment %} <div class="">
+                <label class="">Username</label>
+        
+                <input type="text" name="username" class="">
+            </div>
+        
+            <div class="">
+                <label class="">Password</label>
+        
+                <input type="password" name="password" class="">
+            </div> {% endcomment %}
+        
+        {% comment %}  {% endcomment %}
+                  {% comment %} <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> {% endcomment %}
+                  <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+                  <div class="form-floating">
+                    <input type="text" name="username" class="form-control" id="floatingInput" placeholder="username">
+                    <label for="floatingInput">Username</label>
+                  </div>
+                  <div class="form-floating">
+                    <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
+                    <label for="floatingPassword">Password</label>
+                  </div>
+                  <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+                  <p class="mt-5 mb-3 text-muted">&copy; Acapella 2022</p>
+        {% comment %}  {% endcomment %}
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %} 
+                            <div class="p-2">
+                                <p>{{ error|escape }}</p>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}
+{% comment %}   <button class="">Log in</button> {% endcomment %}
+            </form>
+    </div>
 </div>
-
-<form method="post" action="." class="lg:w-1/4 px-4 mx-auto">
-    {% csrf_token %}
-
-    <div class="mb-5">
-        <label class="text-white">Username</label>
-
-        <input type="text" name="username" class="w-full mt-2 px-4 py-2 rounded-xl">
-    </div>
-
-    <div class="mb-5">
-        <label class="text-white">Password</label>
-
-        <input type="password" name="password" class="w-full mt-2 px-4 py-2 rounded-xl">
-    </div>
-
-    {% if form.errors %}
-        {% for field in form %}
-            {% for error in field.errors %} 
-                <div class="mb-5 p-4 rounded-xl bg-red-300 text-white">
-                    <p>{{ error|escape }}</p>
-                </div>
-            {% endfor %}
-        {% endfor %}
-    {% endif %}
-
-    <button class="px-5 py-3 rounded-xl text-white bg-teal-800 hover:bg-teal-700">Log in</button>
-</form>
+   
 {% endblock %}

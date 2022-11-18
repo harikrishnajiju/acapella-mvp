@@ -70,7 +70,7 @@ function connect() {
         }));
 
         messageInputDom.value = '';
-
+        scrollToBottom();
         return false
     };
 
@@ -150,7 +150,7 @@ function connect() {
     * A function for finding the messages element, and scroll to the bottom of it.
     */
     function scrollToBottom() {
-        let objDiv = document.getElementById("chat-messages");
+        let objDiv = document.getElementById("chat-window");
         objDiv.scrollTop = objDiv.scrollHeight;
     }
 

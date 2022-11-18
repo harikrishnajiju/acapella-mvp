@@ -3,7 +3,20 @@
 {% block title %}Welcome | {% endblock %}
 
 {% block content %}
-<div class="p-10 lg:p-20 text-center">
-    <h1 class="text-3xl lg:text-6xl text-white">ChatBud</h1>
+
+<div class="px-4 py-5 my-5 text-center">
+    <h1 class="display-5 fw-bold">Acapella</h1>
+    <div class="col-lg-6 mx-auto">
+        <p class="lead mb-4">listen to music together with people across the globe!</p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            {% if request.user.is_authenticated %}
+                <button type="button" class="btn btn-primary btn-lg px-4 gap-3"><a href="/rooms/" class="nav-link">Rooms</a></button>
+                <button type="button" class="btn btn-danger btn-lg px-4"><a href="/logout/" class="nav-link">Logout</a></button>
+            {% else %}
+                <button type="button" class="btn btn-primary btn-lg px-4 gap-3"><a href="/login/" class="nav-link">Log In</a></button>
+                <button type="button" class="btn btn-success btn-lg px-4"><a href="/signup/" class="nav-link">Sign Up</a></button>
+            {% endif %}
+        </div>
+    </div>
 </div>
 {% endblock %}
