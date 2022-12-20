@@ -3,23 +3,39 @@ console.log("player.js lol")
 //  player.getVideoUrl()
 
 
+// const audioPlayer = document.querySelector(".audio-player");
+// const timeline = document.querySelector(".timeline");
+// const progressBar = document.querySelector(".progress");
+// const volumeEl = document.querySelector(".volume-container .volume");
+// const volumeSlider = document.querySelector(".controls .volume-slider");
+// const playBtn = document.querySelector(".controls .toggle-play");
+// const thumb = document.querySelector(".name .thumb");
+// const tooltip = $(".progress-tooltip");
+
+
+
+
+
+
+
+
 function youtube_parser(url) {
-let regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-let match = url.match(regExp);
-if (match && match[2].length == 11) {
-    return match[2];
-} else {
-    return "";
-}
+    let regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    let match = url.match(regExp);
+    if (match && match[2].length == 11) {
+        return match[2];
+    } else {
+        return "";
+    }
 }
 
 
 function addTrack() {
-const urlField = document.getElementById("url-field");
-console.log(urlField)
-const id = youtube_parser(urlField.value);
-console.log(id)
-player.loadVideoById(id);
+    const urlField = document.getElementById("url-field");
+    console.log(urlField)
+    const id = youtube_parser(urlField.value);
+    console.log(id)
+    player.loadVideoById(id);
 }
 
 function playVideo() {

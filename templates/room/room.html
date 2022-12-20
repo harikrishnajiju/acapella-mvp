@@ -13,11 +13,62 @@
 
 
 {% block content %}
-<div class="px-4 py-2 my-5 text-center">
+
+{% comment %} // grid layout test  {% endcomment %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm px-4 py-2  text-center">
+            <h1 class="">{{ room.name }}</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm px-4 py-2  text-center">
+            <h3 class="">Host: {{ room.host }}</h3>
+        </div>
+      {% comment %} Permission Controls {% endcomment %}
+        <div class="col-sm px-4 py-2 text-center">
+            <h3 class="">Permission Controls:</h1>
+            <h4 class="" id="permission-control">Host Only</h1>
+            <button class="btn btn-primary" style="margin-left:1rem;" id="permission-change">Change Permission</button>
+        </div>
+
+        <div class="col-sm users">
+        
+        </div>
+    </div>
+  </div>
+
+
+{% comment %} // end test {% endcomment %}
+
+
+{% comment %} <div class="px-4 py-2 my-5 text-center">
     <h1 class="">{{ room.name }}</h1>
 </div>
 
-<div>
+<div class="px-4 py-2 my-5 text-center">
+    <h3 class="">Host:{{ room.host }}</h3>
+</div> {% endcomment %}
+
+{% comment %} Permission Controls {% endcomment %}
+{% comment %} <div class="px-4 py-2 my-5 text-center">
+    <h3 class="">Permission Controls:</h1>
+    <h4 class="" id="permission-control">Host Only</h1>
+    <button class="btn btn-primary" style="margin-left:2rem;" id="permission-change">Change Permission</button>
+</div>
+
+<div class="users">
+    <h4>Online users:</h4>
+    <ul id="users-list" class="users__list">
+        {{user}}
+    </ul>
+    <ul id = "userstest">
+
+    </ul>
+</div> {% endcomment %}
+
+{% comment %} <div>
     <h1>Chat</h1>
 </div>
 <div class="bg-light text-dark card p-2 scroll" id="chat-window" style="min-height:20rem; width:30rem; margin:2rem;">
@@ -33,8 +84,9 @@
 
         <button class="btn btn-primary" style="margin-left:2rem;" id="chat-message-submit">Send</button>
     </form>
-</div>
-<div>
+</div> {% endcomment %}
+
+{% comment %} <div>
     <h1>Player</h1>
 </div>
 <div>
@@ -44,19 +96,173 @@
 <div>
     <!--Youtube-->
     <div id="player"></div>
+    <!-- <div id="player" style="visibility: hidden;"></div> -->
     <!--Player-->
 </div>
 <div id="playback-controls">
     <button class="btn btn-primary" id="play-button">Play</button>
     <button class="btn btn-primary" id="pause-button">Pause</button>
+    <button class="btn btn-primary" id="restart-button">Restart</button>
+</div> {% endcomment %}
+
+
+{% comment %} grid chat + player {% endcomment %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <div>
+                <h2>Chat</h2>
+            </div>
+            <div class="bg-light text-dark card p-2 scroll" id="chat-window" style="min-height:20rem; width:30rem; margin:2rem;">
+                <div class="" id="chat-messages">
+                    {% for m in messages %}<b>{{ m.user.username }}</b>: {{ m.content }}<br>{% endfor %}
+                </div>
+            </div>
+            
+            <div class="" style = "border: 2px black">
+                <form method="post" action="." class="">
+                    {% csrf_token %}
+                    <input type="text" name="content" class="form-control" style="width:30rem; margin:2rem; margin-bottom:1rem;" placeholder="Your message..." id="chat-message-input">
+            
+                    <button class="btn btn-primary" style="margin-left:2rem;" id="chat-message-submit">Send</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-sm">
+            <div>
+                <h2>Player</h2>
+            </div>
+            <div>
+                {% comment %} <input id="url-field" type="text" class="form-control" style="width:30rem; margin:2rem; margin-bottom:1rem;" placeholder="Enter youtube url"/>
+                <button class="btn btn-primary my-2" id="add-track" title="Add track to playlist" onclick="addTrack()" style="margin-left:2rem;">Add Track</button> {% endcomment %}
+                <form id="post-form">
+                    {% csrf_token %}    
+                    <input id="title" type="text" class="form-control" style="width:30rem; margin:2rem; margin-bottom:1rem;" placeholder="Enter Title"/>
+                    <input id="url-field" type="text" class="form-control" style="width:30rem; margin:2rem; margin-bottom:1rem;" placeholder="Enter youtube url"/>
+                    <button class="btn btn-primary" id="add-track" title="Add track to playlist" onclick="addTrack()" style="margin-left:2rem;">Add Track</button>
+                    {% comment %} <button type="submit" class="btn btn-primary" title="Add track to playlist" style="margin-left:2rem;">Add Song</button>  {% endcomment %}
+                </form>
+            </div>
+            <div>
+                <!--Youtube-->
+                <div id="player"></div>
+                {% comment %} <div id="player" style="visibility: hidden;"></div> {% endcomment %}
+                <!--Player-->
+            </div>
+            <div id="playback-controls">
+                <button class="btn btn-primary" id="play-button">Play</button>
+                <button class="btn btn-primary" id="pause-button">Pause</button>
+                <button class="btn btn-primary" id="restart-button">Restart</button>
+            </div>
+        </div> 
+    </div>
 </div>
+
+{% comment %} abel
+<div >
+    <h2>Playlist:</h2>
+    <h3></h3>
+</div>
+
+<form id="post-form">
+    {% csrf_token %}
+    <input id="title" type="text" class="form-control" style="width:30rem; margin:2rem; margin-bottom:1rem;" placeholder="Enter Titel"/>
+    <input id="url" type="text" class="form-control" style="width:30rem; margin:2rem; margin-bottom:1rem;" placeholder="Enter youtube url"/>
+    <button type="submit" class="btn btn-primary" title="Add track to playlist" style="margin-left:2rem;">Add Song</button>  
+</form>
+{% comment %} abel {% endcomment %} 
+
+
+{% comment %} AUDIO PLAYACK CONTROLS {% endcomment %}
+<br><br><br><br>
+    <div class="audio-player">
+        <div class="timeline">
+            <div class="progress-tooltip"></div>
+            <div class="progress"></div>
+        </div>
+        <div class="controls">
+            {% comment %} <div class="play-container">
+                <button class="btn btn-primary" id="play-button">Play</button>
+                <button class="btn btn-primary" id="pause-button">Pause</button>
+                <button class="btn btn-primary" id="restart-button">Restart</button>
+            </div> {% endcomment %}
+            <div class="volume-container">
+                <div class="volume-button">
+                    <div>Volume</div>
+                </div>
+                <input class="volume-slider" type="range" min="0" max="100" step="1">
+            </div>
+            <div class="time">
+                <div class="current">0:00</div>
+                <div class="divider">/</div>
+                <div class="length"></div>
+            </div>
+            <div class="name">
+                {% comment %} <img class="thumb" src="" width="45" height="45" hidden> {% endcomment %}
+                <div class="title">Video Title</div>
+            </div>
+        </div>
+    </div>
+
+    <table id="tablepella" class=" table-bordered text-nowrap">
+        <thead >
+            <tr>
+                <th style="width: 25%">Song</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sng in playlist.song.all %}
+            <tr>
+                <td>{{ sng }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
 
 {% block scripts %}
 {{ room.slug|json_script:"json-roomname" }}
 {{ request.user.username|json_script:"json-username" }}
+{{ room.host.username|json_script:"json-hostname" }}
 
 
 <script src="{% static 'js/socket.js' %}"></script>
 <script src="{% static 'js/player.js' %}"></script>
+<script src="{% static 'js/users.js' %}"></script>
+
+{% comment %} abel {% endcomment %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
+<script src="{% static 'js/socket.js' %}"></script>
+<script src="{% static 'js/player.js' %}"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(document).on('submit', '#post-form', function(event){
+            event.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url:'/rooms/create',
+                data:{
+                    title:$('#title').val(),
+                    url:$('#url-field').val(),
+                    room:JSON.parse(document.getElementById('json-roomname').textContent),
+                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+                },
+                success: function(data){
+                //$("h3").html(data);
+                //$("h3").html($("h3").html() + '<br> * ' + data);
+                var table = document.getElementById("tablepella");
+                var row = table.insertRow(-1);
+                var cell = row.insertCell(0);
+                cell.innerHTML=data;
+                }
+            })
+    
+        })
+
+        
+    })
+
+</script>
+
 {% endblock %}
